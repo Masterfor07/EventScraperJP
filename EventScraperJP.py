@@ -552,7 +552,7 @@ def zaiko_scrap():
     after = None  # Initialize after variable for pagination
     zaiko_events = []
     #print(json.dumps(data, indent=2)) #debugging output
-    
+    i=1
     while True:
       variables = {
         "itemGroupId": "popular_events",
@@ -604,6 +604,8 @@ def zaiko_scrap():
             "Date_ending": date,
             "Link": link
         })
+        print(f"Finished scraping event number {i}. Proceeding to the next one.")
+        i+=1
       if not page_info["hasNextPage"]:
             break
         
@@ -611,11 +613,10 @@ def zaiko_scrap():
 
     workbook, sheet = OpenSheet(sheet_name)
     for zaiko_event in zaiko_events:
-        sheet.append([zaiko_event["Name"], zaiko_event["Romaji"], zaiko_event["Place"], zaiko_event["Date"], zaiko_event["Date"], zaiko_event["Link"]])
+        sheet.append([zaiko_event["Name"], zaiko_event["Romaji"], zaiko_event["Place"], zaiko_event["Date_beginning"], zaiko_event["Date_ending"], zaiko_event["Link"]])
     save_workbook(workbook)
     remove_duplicates_in_excel_name_place(sheet_name)
-    splitter_ltike(sheet_name)
-    cleaner(sheet_name)
+    cleaner(sheet_name) #DATE FORMAT NEEDS TO BE FIXED HERE
     style_sort_excel(sheet_name)
     print(f"Done! Scraped zaiko.io.")
 #****************************************************************#
