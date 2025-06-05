@@ -68,31 +68,30 @@ while True:
   after = page_info["nextCursor"]
   
   for event_edge in events:
-      node = event_edge["node"]
-      event = event_edge["node"]
-      link = node["action"].get("url")
-      title = event.get("title", "No Title")
-      details = node.get("details", [])
-      location = None
-      date = None
-
-      for detail in details:
-          icon_url = detail.get("iconUrl", "")
-          content = detail.get("content", "")
-
-          if "offline-icon.svg" in icon_url:
-            location = content
-          elif "online-icon.svg" in icon_url and location is None:
-            location = content
-          elif "calendar-icon.svg" in icon_url:
-              date = content
-              
-      print("Title:", title)
-      print("Date:", date)
-      print("Location:", location)
-      print("Image:", node.get("imageUrl"))
-      print("Link:", link)
-      print("---")
-      
+    node = event_edge["node"]
+    event = event_edge["node"]
+    link = node["action"].get("url")
+    title = event.get("title", "No Title")
+    details = node.get("details", [])
+    location = None
+    date = None
+    
+    for detail in details:
+        icon_url = detail.get("iconUrl", "")
+        content = detail.get("content", "")
+        if "offline-icon.svg" in icon_url:
+          location = content
+        elif "online-icon.svg" in icon_url and location is None:
+          location = content
+        elif "calendar-icon.svg" in icon_url:
+            date = content
+            
+    print("Title:", title)
+    print("Date:", date)
+    print("Location:", location)
+    print("Image:", node.get("imageUrl"))
+    print("Link:", link)
+    print("---")
+    
   if not page_info["hasNextPage"]:
         break
