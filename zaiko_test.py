@@ -1,5 +1,4 @@
 import requests
-import json
 
 url = "https://graphql.zaiko.io/graphql"
 
