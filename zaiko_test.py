@@ -1,17 +1,14 @@
 import requests
 import json
 
-# 1. API Endpoint
 url = "https://graphql.zaiko.io/graphql"
 
-# 2. Headers to mimic a browser
 headers = {
     "Content-Type": "application/json",
     "User-Agent": "Mozilla/5.0",
     "x-zaiko-apikey": "BzDDiXGPc1YQWeW9sJ8VvMxHSxs+e2lmT+iLwGQzN5o="
 }
 
-# 3. GraphQL query (paste exactly as it appeared in DevTools)
 query = """
 query ItemGroupScreen($itemGroupId: ID!, $displayType: EncoreItemDisplayType, $after: String) {
   encoreItemGroup(id: $itemGroupId, displayType: $displayType) {
@@ -45,28 +42,23 @@ query ItemGroupScreen($itemGroupId: ID!, $displayType: EncoreItemDisplayType, $a
 }
 """
 
-# 4. Your variables from DevTools
 variables = {
     "itemGroupId": "popular_events",
     "displayType": "LIST",
-    "after": None  # set to None or "" for the first page
+    "after": None 
 }
 
-# 5. Build the payload
 payload = {
     "operationName": "ItemGroupScreen",
     "variables": variables,
     "query": query
 }
 
-# 6. Send the request
 response = requests.post(url, headers=headers, json=payload)
 data = response.json()
 
-# 7. Optional: Print raw JSON for debugging
-print(json.dumps(data, indent=2))
+print(json.dumps(data, indent=2)) #debugging output
 
-# 8. Extract event info
 events = data["data"]["encoreItemGroup"]["encoreListItems"]["edges"]
 print("🎟️ Popular Events:\n")
 
