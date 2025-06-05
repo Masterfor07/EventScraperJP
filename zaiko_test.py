@@ -73,7 +73,6 @@ while True:
       link = node["action"].get("url")
       title = event.get("title", "No Title")
       details = node.get("details", [])
-
       location = None
       date = None
 
@@ -87,13 +86,12 @@ while True:
             location = content
           elif "calendar-icon.svg" in icon_url:
               date = content
-
-
-      print("🟢 Title:", title)
-      print("🟢 Date:", date)
-      print("🟢 Location:", location)
-      print("🖼️ Image:", node.get("imageUrl"))
-      print("🔗 Link:", link)
+              
+      print("Title:", title)
+      print("Date:", date)
+      print("Location:", location)
+      print("Image:", node.get("imageUrl"))
+      print("Link:", link)
       print("---")
       
   if not page_info["hasNextPage"]:
