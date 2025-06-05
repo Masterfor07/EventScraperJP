@@ -614,6 +614,7 @@ def zaiko_scrap():
     workbook, sheet = OpenSheet(sheet_name)
     for zaiko_event in zaiko_events:
         sheet.append([zaiko_event["Name"], zaiko_event["Romaji"], zaiko_event["Place"], zaiko_event["Date_beginning"], zaiko_event["Date_ending"], zaiko_event["Link"]])
+    
     save_workbook(workbook)
     remove_duplicates_in_excel_name_place(sheet_name)
     cleaner(sheet_name) #DATE FORMAT NEEDS TO BE FIXED HERE
