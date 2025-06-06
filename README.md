@@ -1,5 +1,5 @@
 # EventScraperJP
-WebScraper for https://t.pia.jp/ and https://l-tike.com/ and https://eplus.jp/
+WebScraper for https://t.pia.jp/ and https://l-tike.com/ and https://eplus.jp/ and https://zaiko.io/
 
 
 Python + Flask + JS with Electron + HTML + CSS
