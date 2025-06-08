@@ -351,6 +351,37 @@ def cleaner(sheet_name):
 
     save_workbook(workbook)
     print(f"Finished cleaning dates in {sheet_name}.")
+    
+    
+def cleaner_zaiko(sheet_name):
+    workbook = openpyxl.load_workbook(EXCEL_FILE)
+    sheet = workbook[sheet_name]
+    current_year = datetime.now().year
+    ymd_pattern = re.compile(r"^\d{4}/\d{2}/\d{2}")
+
+    for row in range(2, sheet.max_row + 1):
+        for column_index in [4, 5]:
+            cell_value = sheet.cell(row=row, column=column_index).value
+            if cell_value:
+                cell_str = str(cell_value).strip()
+                if ymd_pattern.match(cell_str):
+                    yymmdd = cell_value[:10]
+                    date_value = datetime.strptime(yymmdd, "%Y/%m/%d")
+                    formatted_date_yymmdd = date_value.strftime("%Y-%m-%d")
+                    sheet.cell(row=row, column=column_index).value = formatted_date_yymmdd
+                    # If the date is already in YYYY-MM-DD format (should be if the event is next year), skip it
+                    continue
+                try: 
+                    mmdd = cell_value[:5]
+                    date_str = f"{current_year}/{mmdd}"
+                    date_value = datetime.strptime(date_str, "%Y/%m/%d")
+                    formatted_date = date_value.strftime("%Y-%m-%d")
+                    sheet.cell(row=row, column=column_index).value = formatted_date
+                except ValueError as e:
+                    print(f"Row {row}, Column {column_index}: Invalid date '{cell_value}' - {e}")
+
+    save_workbook(workbook)
+    print(f"Finished cleaning dates in {sheet_name}.")
 
 def style_sort_excel(sheet_name):
     workbook = openpyxl.load_workbook(EXCEL_FILE)
@@ -505,7 +536,121 @@ def ltike_jp_scrap(from_date, to_date):
     style_sort_excel(sheet_name)
 
     print(f"Done! Scraped l-tike.com.")
+    
+def zaiko_scrap():
+    ## Here we start scraping zaiko.io ##
+    url = "https://graphql.zaiko.io/graphql"
 
+    headers = {
+        "Content-Type": "application/json",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:139.0) Gecko/20100101 Firefox/139.0",
+        "x-zaiko-apikey": "BzDDiXGPc1YQWeW9sJ8VvMxHSxs+e2lmT+iLwGQzN5o="
+    }
+
+    query = """
+    query ItemGroupScreen($itemGroupId: ID!, $displayType: EncoreItemDisplayType, $after: String) {
+      encoreItemGroup(id: $itemGroupId, displayType: $displayType) {
+        id
+        title
+        ... on EncoreListItemGroup {
+          itemImageAspect
+          encoreListItems(first: 30, after: $after) {
+            edges {
+              cursor
+              node {
+                id
+                title
+                imageUrl
+                action {
+                  url
+                }
+                details {
+                    content
+                    iconUrl
+                }
+              }
+            }
+            pageInfo {
+              hasNextPage
+              nextCursor
+            }
+          }
+        }
+      }
+    }
+    """
+
+    after = None  # Initialize after variable for pagination
+    zaiko_events = []
+    #print(json.dumps(data, indent=2)) #debugging output
+    i=1
+    while True:
+      variables = {
+        "itemGroupId": "popular_events",
+        "displayType": "LIST",
+        "after": after #Starts from the "second" page
+      }
+
+      payload = {
+        "operationName": "ItemGroupScreen",
+        "variables": variables,
+        "query": query
+      }
+
+      response = requests.post(url, headers=headers, json=payload)
+      data = response.json()
+
+      #print(json.dumps(data, indent=2)) #debugging output
+
+      events = data["data"]["encoreItemGroup"]["encoreListItems"]["edges"]
+      page_info = data["data"]["encoreItemGroup"]["encoreListItems"]["pageInfo"]
+      after = page_info["nextCursor"]
+    
+      for event_edge in events:
+        node = event_edge["node"]
+        event = event_edge["node"]
+        link = node["action"].get("url")
+        title = event.get("title", "No Title")
+        details = node.get("details", [])
+        location = None
+        date = None
+        
+        for detail in details:
+            icon_url = detail.get("iconUrl", "")
+            content = detail.get("content", "")
+            if "offline-icon.svg" in icon_url:
+              location = content
+            elif "online-icon.svg" in icon_url and location is None:
+              location = content
+            elif "calendar-icon.svg" in icon_url:
+                date = content
+        
+        titleRomacji = convert_to_romaji(title)
+
+        zaiko_events.append({
+            "Name": title,
+            "Romaji": titleRomacji,
+            "Place": location,
+            "Date_beginning": date,
+            "Date_ending": date,
+            "Link": link
+        })
+        print(f"Finished scraping event number {i}. Proceeding to the next one.")
+        i+=1
+      if not page_info["hasNextPage"]:
+            break
+        
+    sheet_name = "Events_zaiko.io"
+
+    workbook, sheet = OpenSheet(sheet_name)
+    for zaiko_event in zaiko_events:
+        sheet.append([zaiko_event["Name"], zaiko_event["Romaji"], zaiko_event["Place"], zaiko_event["Date_beginning"], zaiko_event["Date_ending"], zaiko_event["Link"]])
+    
+    save_workbook(workbook)
+    remove_duplicates_in_excel_name_place(sheet_name)
+    cleaner_zaiko(sheet_name)
+    style_sort_excel(sheet_name)
+    print(f"Done! Scraped zaiko.io.")
 #****************************************************************#
 #New code from app.py integrated here
 
@@ -531,6 +676,7 @@ def start_scrape():
     print('Selected sites:', selected_sites)
 
     if 'tpiajp' in selected_sites:
+        print('Scraping t.pia.jp...')
         pia_jp_scrap()
         sheet_names.append("Events_t.pia.jp")
     if 'eplus' in selected_sites:
@@ -542,6 +688,10 @@ def start_scrape():
         print('Selected end date for l-tike.com:', l_tike_end_date)
         ltike_jp_scrap(l_tike_start_date, l_tike_end_date)
         sheet_names.append("Events_l-tike.com")
+    if 'zaiko' in selected_sites:
+        print('Scraping zaiko.io...')
+        zaiko_scrap()
+        sheet_names.append("Events_zaiko.io")
 
     if len(sheet_names) > 1:
         combine_sheets(sheet_names)
