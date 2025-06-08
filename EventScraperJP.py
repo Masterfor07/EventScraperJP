@@ -446,6 +446,37 @@ def combine_sheets(sheet_names):
     style_sort_excel("Events_combined")
     print("Combined all sheets into 'Events_combined'.")
     
+def filter_events_by_date(sheet_name, start_date, end_date):
+    workbook = openpyxl.load_workbook(EXCEL_FILE)
+    sheet = workbook[sheet_name]
+
+    # Convert to datetime for comparison
+    start_dt = datetime.strptime(start_date, "%Y-%m-%d")
+    end_dt = datetime.strptime(end_date, "%Y-%m-%d")
+
+    row = 2
+    while row <= sheet.max_row:
+        begin_val = sheet.cell(row=row, column=4).value
+        end_val = sheet.cell(row=row, column=5).value
+
+        try:
+            start_dt_row = datetime.strptime(str(begin_val), "%Y-%m-%d") if begin_val else None
+            end_dt_row = datetime.strptime(str(end_val), "%Y-%m-%d") if end_val else None
+        except Exception as e:
+            print(f"Row {row}: Error parsing dates: {e}")
+            row += 1
+            continue
+
+        # Remove if out of range
+        if (start_dt_row and start_dt_row < start_dt) or (end_dt_row and end_dt_row > end_dt):
+            sheet.delete_rows(row)
+        else:
+            row += 1
+
+    save_workbook(workbook)
+    print(f"Filtered events in {sheet_name} by date range {start_date} to {end_date}.")   
+
+    
 def OptiScrape_pia(url):
     doc_Pia = doc_from_url(url)
     return PiaScraper(doc_Pia)
@@ -695,6 +726,14 @@ def start_scrape():
 
     if len(sheet_names) > 1:
         combine_sheets(sheet_names)
+        all_sheets = sheet_names + ["Events_combined"]
+    else:
+        all_sheets = sheet_names
+    
+    start_date_fmt = f"{start_date[:4]}-{start_date[4:6]}-{start_date[6:]}"
+    end_date_fmt = f"{end_date[:4]}-{end_date[4:6]}-{end_date[6:]}"
+    for sheet in all_sheets:
+        filter_events_by_date(sheet, start_date_fmt, end_date_fmt)
 
     print(f"All done! Your file has been saved to:")
     print(EXCEL_FILE)
