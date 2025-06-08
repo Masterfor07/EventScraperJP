@@ -28,40 +28,23 @@
 
     <div class="scrape_settings">
     <a href="site_main.html"><button id="back" style="transform: scale(0.8);">⏪Back</button></a>
-    <button id="inner_settings" style="transform: scale(0.8);">📅Settings</button>
     <a><button id="start_scrape"  style="transform: scale(0.8);">✅Start</button></a>
     </div>
 
     <div id="settings_options" style="display: block;">
-      <h2 style="text-align: center;">l-tike.com Options</h2>
-      <div class="l-tike_options">
-      <div class="l-tike_input">
-        <label for="l-tike_start_date">Start Date:</label>
-        <input type="date" id="l-tike_start_date" name="l-tike_start_date" value="2025-04-18">
+      <h2 style="text-align: center;">Select date range</h2>
+      <div class="date_options">
+      <div class="date_input">
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" value="2025-01-01">
       </div>
       ↔
-      <div class="l-tike_input">
-        <label for="l-tike_end_date">End Date:</label>
-        <input type="date" id="l-tike_end_date" name="l-tike_end_date" value="2025-05-14">
+      <div class="date_input">
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date" value="2025-12-31">
       </div>
       </div>
-      <h2 style="text-align: center;">eplus.jp Options</h2>
-      <div class="eplus_options">
-      <div class="eplus_grid">
-            <button class="monthSelect" id="1" type="button">January</button>
-            <button class="monthSelect" id="2" type="button">February</button>
-            <button class="monthSelect" id="3" type="button">March</button>
-            <button class="monthSelect" id="4" type="button">April</button>
-            <button class="monthSelect" id="5" type="button">May</button>
-            <button class="monthSelect" id="6" type="button">June</button>
-            <button class="monthSelect" id="7" type="button">July</button>
-            <button class="monthSelect" id="8" type="button">August</button>
-            <button class="monthSelect" id="9" type="button">September</button>
-            <button class="monthSelect" id="10" type="button">October</button>
-            <button class="monthSelect" id="11" type="button">November</button>
-            <button class="monthSelect" id="12" type="button">December</button>
-          </div>
-      </div>
+      <p style="display: block; text-align: center;">Currently only affects eplus.jp and l-tike.com.</p>
     </div>
 
     <script src="./renderer.js"></script>

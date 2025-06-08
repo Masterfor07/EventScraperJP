@@ -8,18 +8,6 @@ ipcRenderer.on("childoutput", (event, data) => {
     document.getElementById("output-box").innerText += data;
 });
 
-  const settingsButton = document.getElementById('inner_settings');
-  const settingsOptions = document.getElementById('settings_options');
-
-  if (settingsButton)  {
-    settingsButton.addEventListener('click', function() {
-      if (settingsOptions.style.display === 'block' || settingsOptions.style.display === '') {
-        settingsOptions.style.display = 'none';
-      } else {
-        settingsOptions.style.display = 'block';
-      }
-    });
-  }
   const buttons = document.querySelectorAll('.siteSelect');
   buttons.forEach(button => {
     button.addEventListener('click', function() {
@@ -33,6 +21,22 @@ ipcRenderer.on("childoutput", (event, data) => {
       this.classList.toggle('selected_eplus');
     });
   });
+
+  function getMonthsInRange(start_date, end_date) {
+  if (!start_date || !end_date) return [];
+  const start = new Date(start_date);
+  const end = new Date(end_date);
+  let months = [];
+  let current = new Date(start.getFullYear(), start.getMonth(), 1);
+
+  while (current <= end) {
+    months.push(current.getMonth() + 1); // JS months are 0-based
+    current.setMonth(current.getMonth() + 1);
+  }
+  console.log('Months in range:', months);
+  return months;
+  }
+
 
   const startButton = document.getElementById('start_scrape');
   if (startButton) {
@@ -49,7 +53,14 @@ ipcRenderer.on("childoutput", (event, data) => {
       alert('Please select at least one site.');
       return;
     }
-    const selectedMonths = [];
+    
+    let start_date = document.getElementById('start_date').value;
+    let end_date = document.getElementById('end_date').value;
+
+    console.log('Selected start date:', start_date);
+    console.log('Selected end date:', end_date);
+    
+    const selectedMonths = getMonthsInRange(start_date, end_date);
     buttons_eplus.forEach(buttons_eplus => {
       if (buttons_eplus.classList.contains('selected_eplus')) {
         selectedMonths.push(buttons_eplus.id);
@@ -60,17 +71,11 @@ ipcRenderer.on("childoutput", (event, data) => {
     if (selectedMonths.length === 0 && selectedSites.includes('eplus')) {
       alert('Please select at least one month.');
       return;}
-
-    let l_tike_start_date = document.getElementById('l-tike_start_date').value;
-    let l_tike_end_date = document.getElementById('l-tike_end_date').value;
-
-    console.log('Selected start date:', l_tike_start_date);
-    console.log('Selected end date:', l_tike_end_date);
     
     localStorage.setItem('selectedSites', JSON.stringify(selectedSites));
     localStorage.setItem('selectedMonths', JSON.stringify(selectedMonths));
-    localStorage.setItem('l-tike_start_date', JSON.stringify(l_tike_start_date));
-    localStorage.setItem('l-tike_end_date', JSON.stringify(l_tike_end_date));
+    localStorage.setItem('start_date', JSON.stringify(start_date));
+    localStorage.setItem('end_date', JSON.stringify(end_date));
 
     window.location.href = 'site_scraping.html';
   });}
@@ -83,8 +88,8 @@ ipcRenderer.on("childoutput", (event, data) => {
 
     const selectedSites = JSON.parse(localStorage.getItem('selectedSites')) || [];
     const selectedMonths = JSON.parse(localStorage.getItem('selectedMonths')) || [];
-    const l_tike_start_date = JSON.parse(localStorage.getItem('l-tike_start_date')) || [];
-    const l_tike_end_date = JSON.parse(localStorage.getItem('l-tike_end_date')) || [];
+    const start_date = JSON.parse(localStorage.getItem('start_date')) || [];
+    const end_date = JSON.parse(localStorage.getItem('end_date')) || [];
 
     selectedSites.forEach(site => {
       const img = document.createElement('img');
@@ -103,7 +108,7 @@ ipcRenderer.on("childoutput", (event, data) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({selectedSites, selectedMonths, l_tike_start_date, l_tike_end_date}),
+      body: JSON.stringify({selectedSites, selectedMonths, start_date, end_date}),
     };
     console.log('Request:', request);
     fetch('http://localhost:5000/start_scrape', request)
