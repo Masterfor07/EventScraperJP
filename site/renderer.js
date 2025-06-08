@@ -8,18 +8,6 @@ ipcRenderer.on("childoutput", (event, data) => {
     document.getElementById("output-box").innerText += data;
 });
 
-  const settingsButton = document.getElementById('inner_settings');
-  const settingsOptions = document.getElementById('settings_options');
-
-  if (settingsButton)  {
-    settingsButton.addEventListener('click', function() {
-      if (settingsOptions.style.display === 'block' || settingsOptions.style.display === '') {
-        settingsOptions.style.display = 'none';
-      } else {
-        settingsOptions.style.display = 'block';
-      }
-    });
-  }
   const buttons = document.querySelectorAll('.siteSelect');
   buttons.forEach(button => {
     button.addEventListener('click', function() {
@@ -33,6 +21,22 @@ ipcRenderer.on("childoutput", (event, data) => {
       this.classList.toggle('selected_eplus');
     });
   });
+
+  function getMonthsInRange(start_date, end_date) {
+  if (!start_date || !end_date) return [];
+  const start = new Date(start_date);
+  const end = new Date(end_date);
+  let months = [];
+  let current = new Date(start.getFullYear(), start.getMonth(), 1);
+
+  while (current <= end) {
+    months.push(current.getMonth() + 1); // JS months are 0-based
+    current.setMonth(current.getMonth() + 1);
+  }
+  console.log('Months in range:', months);
+  return months;
+  }
+
 
   const startButton = document.getElementById('start_scrape');
   if (startButton) {
@@ -49,7 +53,14 @@ ipcRenderer.on("childoutput", (event, data) => {
       alert('Please select at least one site.');
       return;
     }
-    const selectedMonths = [];
+    
+    let start_date = document.getElementById('start_date').value;
+    let end_date = document.getElementById('end_date').value;
+
+    console.log('Selected start date:', start_date);
+    console.log('Selected end date:', end_date);
+    
+    const selectedMonths = getMonthsInRange(start_date, end_date);
     buttons_eplus.forEach(buttons_eplus => {
       if (buttons_eplus.classList.contains('selected_eplus')) {
         selectedMonths.push(buttons_eplus.id);
@@ -60,12 +71,6 @@ ipcRenderer.on("childoutput", (event, data) => {
     if (selectedMonths.length === 0 && selectedSites.includes('eplus')) {
       alert('Please select at least one month.');
       return;}
-
-    let start_date = document.getElementById('start_date').value;
-    let end_date = document.getElementById('end_date').value;
-
-    console.log('Selected start date:', start_date);
-    console.log('Selected end date:', end_date);
     
     localStorage.setItem('selectedSites', JSON.stringify(selectedSites));
     localStorage.setItem('selectedMonths', JSON.stringify(selectedMonths));
