@@ -184,7 +184,8 @@ def ltikeScraper(doc_ltike, from_date, to_date):
         print(f"Max pages: {max_pages}")
     
     for page in range(0, max_pages):
-        url = f"https://l-tike.com/search/?keyword=*&area=3%2C5&pref=08%2C09%2C10%2C11%2C12%2C13%2C14%2C15%2C19%2C20%2C16%2C17%2C18%2C25%2C26%2C27%2C28%2C29%2C30&pdate_from={from_date}&pdate_to={to_date}&page={page}&ptabflg=0"
+        url = f"https://l-tike.com/search/?keyword=*&pdate_from={from_date}&pdate_to={to_date}&page={page}&ptabflg=0"
+        #If you want only the Kanto/Koshinetsu/Kinki/Hokuriku regions -> url = f"https://l-tike.com/search/?keyword=*&area=3%2C5&pref=08%2C09%2C10%2C11%2C12%2C13%2C14%2C15%2C19%2C20%2C16%2C17%2C18%2C25%2C26%2C27%2C28%2C29%2C30&pdate_from={from_date}&pdate_to={to_date}&page={page}&ptabflg=0"
         print(f"Scraping page: {page+1}")
         
         retries = 5
