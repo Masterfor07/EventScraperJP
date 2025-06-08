@@ -179,7 +179,7 @@ button:active {
   transform: scale(0.97);
 }
 
-.l-tike_options {
+.date_options {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -189,7 +189,7 @@ button:active {
   font-size: 1.2rem;
 }
 
-.l-tike_input {
+.date_input {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -197,7 +197,7 @@ button:active {
   gap: 15px;
 }
 
-.l-tike_input input {
+.date_input input {
   font-size: 1.2rem;
 }
 

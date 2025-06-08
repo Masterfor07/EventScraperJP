@@ -674,6 +674,8 @@ def start_scrape():
     l_tike_end_date = data.get('l_tike_end_date').replace("-", "")
     
     print('Selected sites:', selected_sites)
+    print('Selected start date:', l_tike_start_date)
+    print('Selected end date:', l_tike_end_date)
 
     if 'tpiajp' in selected_sites:
         print('Scraping t.pia.jp...')
@@ -684,8 +686,6 @@ def start_scrape():
         eplus_jp_scrap(selected_months)
         sheet_names.append("Events_eplus.jp")
     if 'l_tike' in selected_sites:
-        print('Selected start date for l-tike.com:', l_tike_start_date)
-        print('Selected end date for l-tike.com:', l_tike_end_date)
         ltike_jp_scrap(l_tike_start_date, l_tike_end_date)
         sheet_names.append("Events_l-tike.com")
     if 'zaiko' in selected_sites:
