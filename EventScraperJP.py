@@ -351,6 +351,37 @@ def cleaner(sheet_name):
 
     save_workbook(workbook)
     print(f"Finished cleaning dates in {sheet_name}.")
+    
+    
+def cleaner_zaiko(sheet_name):
+    workbook = openpyxl.load_workbook(EXCEL_FILE)
+    sheet = workbook[sheet_name]
+    current_year = datetime.now().year
+    ymd_pattern = re.compile(r"^\d{4}/\d{2}/\d{2}")
+
+    for row in range(2, sheet.max_row + 1):
+        for column_index in [4, 5]:
+            cell_value = sheet.cell(row=row, column=column_index).value
+            if cell_value:
+                cell_str = str(cell_value).strip()
+                if ymd_pattern.match(cell_str):
+                    yymmdd = cell_value[:10]
+                    date_value = datetime.strptime(yymmdd, "%Y/%m/%d")
+                    formatted_date_yymmdd = date_value.strftime("%Y-%m-%d")
+                    sheet.cell(row=row, column=column_index).value = formatted_date_yymmdd
+                    # If the date is already in YYYY-MM-DD format (should be if the event is next year), skip it
+                    continue
+                try: 
+                    mmdd = cell_value[:5]
+                    date_str = f"{current_year}/{mmdd}"
+                    date_value = datetime.strptime(date_str, "%Y/%m/%d")
+                    formatted_date = date_value.strftime("%Y-%m-%d")
+                    sheet.cell(row=row, column=column_index).value = formatted_date
+                except ValueError as e:
+                    print(f"Row {row}, Column {column_index}: Invalid date '{cell_value}' - {e}")
+
+    save_workbook(workbook)
+    print(f"Finished cleaning dates in {sheet_name}.")
 
 def style_sort_excel(sheet_name):
     workbook = openpyxl.load_workbook(EXCEL_FILE)
@@ -617,7 +648,7 @@ def zaiko_scrap():
     
     save_workbook(workbook)
     remove_duplicates_in_excel_name_place(sheet_name)
-    cleaner(sheet_name) #DATE FORMAT NEEDS TO BE FIXED HERE
+    cleaner_zaiko(sheet_name)
     style_sort_excel(sheet_name)
     print(f"Done! Scraped zaiko.io.")
 #****************************************************************#
