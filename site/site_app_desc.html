@@ -3,29 +3,42 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./style.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
     <title>Event Scraper JP</title>
   </head>
-  <body>
-    <h1>🎟️ App description 🎟️</h1>
-
-    <div class="app_desc">
-      <p>This app is a web scraper that scrapes event information from various ticket websites in Japan. The app is designed to scrape event information from the following websites:</p><br>
-      <ul>
-        <li>✨<a href="https://t.pia.jp/" target="_blank" style="color: blue; text-decoration: underline;">Ticket Pia (t.pia.jp)</a></li>
-        <li>✨<a href="https://eplus.jp/" target="_blank" style="color: blue; text-decoration: underline;">e+ (eplus.jp)</a></li>
-        <li>✨<a href="https://l-tike.com/" target="_blank" style="color: blue; text-decoration: underline;">Lawson Ticket (l-tike.com)</a></li>
-        <li>✨<a href="https://zaiko.io/" target="_blank" style="color: blue; text-decoration: underline;">ZAIKO (zaiko.io)</a></li>
-      </ul>
-      <br><p>The app allows Users to select which websites they want to scrape and the date range.<br>
-        <br><p>Made by Mast 🌠</p>
-
-    </div>
-    
-    <div class="scrape_settings">
-      <a href="site_main.html"><button id="back" style="scale: 0.8;">⏪Back</button></a>
+  <body class="bg-gray-900 min-h-screen flex items-center justify-center">
+    <div class="overflow-hidden bg-gray-900 py-16 sm:py-24 w-full">
+      <div class="mx-auto max-w-5xl px-6 lg:px-8">
+        <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 items-center">
+          <div class="lg:pt-4 lg:pr-8">
+            <div class="lg:max-w-lg">
+              <h2 class="text-base font-semibold text-indigo-400">Event Scraper JP</h2>
+              <p class="text-5xl font-semibold tracking-tight text-balance bg-gradient-to-r from-sky-400 to-pink-600 bg-clip-text text-transparent sm:text-7xl">App Description</p>
+              <p class="mt-6 text-lg text-gray-300">
+                This app is a web scraper that scrapes event information from various ticket websites in Japan. The app is designed to scrape event information from the following websites:
+              </p>
+              <ul class="mt-4 list-disc list-inside text-gray-300 space-y-1">
+                <li>✨ <a href="https://t.pia.jp/" target="_blank" class="text-sky-400 underline">Ticket Pia (t.pia.jp)</a></li>
+                <li>✨ <a href="https://eplus.jp/" target="_blank" class="text-sky-400 underline">e+ (eplus.jp)</a></li>
+                <li>✨ <a href="https://l-tike.com/" target="_blank" class="text-sky-400 underline">Lawson Ticket (l-tike.com)</a></li>
+                <li>✨ <a href="https://zaiko.io/" target="_blank" class="text-sky-400 underline">ZAIKO (zaiko.io)</a></li>
+              </ul>
+              <p class="mt-4 text-gray-300">
+                The app allows users to select which websites they want to scrape and the date range.
+              </p>
+              <p class="mt-4 text-gray-400">Made by Mast 🌠</p>
+              <div class="mt-8">
+                <a href="site_main.html">
+                  <button class="px-6 py-2 bg-red-900 text-gray-200 rounded-lg hover:bg-red-700 transition">Menu</button>
+                </a>
+              </div>
+            </div>
+          </div>
+          <img src="tpiajp.png" alt="App Screenshot" class="w-full max-w-xs mx-auto rounded-xl shadow-xl ring-1 ring-white/10" />
+        </div>
+      </div>
     </div>
   </body>
 </html>
