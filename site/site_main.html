@@ -8,6 +8,16 @@
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
     <title>EventJPScraper</title>
+    <style>
+      @keyframes tilt {
+        0%, 50%, 100% { transform: rotate(0deg);}
+        25% { transform: rotate(1.4deg);}
+        75% { transform: rotate(-1.4deg);}
+      }
+      .tilt-animate {
+        animation: tilt 10s infinite linear;
+      }
+    </style>
   </head>
   <body class="bg-black min-h-screen flex items-center justify-center">
     <div class="transform scale-150">
@@ -22,7 +32,7 @@
       </div>
       <div class="mt-20 grid gap-8 justify-items-center">
         <div class="relative group">
-          <div class="absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-pink-600 rounded-lg blur opacity-80 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+          <div class="absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-pink-600 rounded-lg blur opacity-80 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 tilt-animate"></div>
           <a href="site_scrape.html">
             <button id="start" class="w-80 relative px-7 py-4 bg-black rounded-lg leading-none flex items-center justify-center">
               <span class="flex items-center mr-4">
@@ -35,7 +45,7 @@
           </a>
         </div>
         <div class="relative group">
-          <div class="absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-pink-600 rounded-lg blur opacity-80 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+          <div class="absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-pink-600 rounded-lg blur opacity-80 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 tilt-animate"></div>
           <a href="site_site_desc.html">
             <button id="site_desc" class="w-80 relative px-7 py-4 bg-black rounded-lg leading-none flex items-center justify-center">
               <span class="flex items-center mr-4">
@@ -48,7 +58,7 @@
           </a>
         </div>
         <div class="relative group">
-          <div class="absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-pink-600 rounded-lg blur opacity-80 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+          <div class="absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-pink-600 rounded-lg blur opacity-80 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 tilt-animate"></div>
           <a href="site_app_desc.html">
             <button id="app_desc" class="w-80 relative px-7 py-4 bg-black rounded-lg leading-none flex items-center justify-center">
               <span class="flex items-center mr-4">
@@ -61,7 +71,7 @@
           </a>
         </div>
         <div class="relative group">
-          <div class="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-red-500 rounded-lg blur opacity-80 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+          <div class="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-red-500 rounded-lg blur opacity-80 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 tilt-animate"></div>
           <a href="site_app_desc.html">
             <button id="exit-button" class="w-80 relative px-7 py-4 bg-black rounded-lg leading-none flex items-center justify-center">
               <span class="flex items-center mr-4">
