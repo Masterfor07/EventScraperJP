@@ -19,8 +19,8 @@
     "axios": "^1.4.0"
   },
   "build": {
-    "appId": "com.Mast.EventJPScraper",
-    "productName": "EventJP Scraper",
+    "appId": "com.Mast.EventScraperJP",
+    "productName": "EventScraperJP",
     "directories": {
       "output": "release-builds"
     },
