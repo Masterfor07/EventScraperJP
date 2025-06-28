@@ -6,6 +6,8 @@ Python + Flask + JS with Electron + HTML + Tailwind CSS (Play CDN)
 
 Scraping eplus.jp is laggy due to the website's constrains (tldr: if it goes any faster the website will die all together).
 
+Should work on Windows, Linux and MacOS.
+
 Project made with love for a Uni course by Mast.
 Thank you Lange, Spi and others for all the help.
 
