@@ -20,34 +20,34 @@
         <ul class="flex-column space-y space-y-4 text-sm font-medium text-gray-400 md:me-4 mb-4 md:mb-0 w-40 ml-20">
             <li>
                 <button id="tab-btn-1" onclick="showTab(1)" class="w-40">
-                <a href="#" class="inline-flex items-center px-4 py-3 text-white bg-blue-600 rounded-lg active hover:bg-blue-700 w-full" aria-current="page">
+                <a href="#" class="inline-flex items-center px-4 py-3 text-white bg-blue-600 rounded-lg active hover:bg-blue-700 w-full scale-95" aria-current="page">
                    ✨ t.pia.jp
                 </a>
                 </button>
             </li>
             <li>
                 <button id="tab-btn-2" onclick="showTab(2)" class="w-40">
-                <a href="#" class="inline-flex items-center px-4 py-3 rounded-lg hover:text-white bg-gray-800 hover:bg-gray-700 w-full">
+                <a href="#" class="inline-flex items-center px-4 py-3 rounded-lg hover:text-white bg-gray-800 hover:bg-gray-700 w-full transition-all duration-100 active:scale-95">
                    ✨ eplus.jp
                 </a>
                 </button>
             </li>
             <li>
                 <button id="tab-btn-3" onclick="showTab(3)" class="w-40"> 
-                <a href="#" class="inline-flex items-center px-4 py-3 rounded-lg hover:text-white bg-gray-800 hover:bg-gray-700 w-full">
+                <a href="#" class="inline-flex items-center px-4 py-3 rounded-lg hover:text-white bg-gray-800 hover:bg-gray-700 w-full transition-all duration-100 active:scale-95">
                    ✨ l.tike.com
                 </a>
                 </button>
             </li>
             <li>
               <button id="tab-btn-4" onclick="showTab(4)" class="w-40"> 
-              <a href="#" class="inline-flex items-center px-4 py-3 rounded-lg hover:text-white bg-gray-800 hover:bg-gray-700 w-full">
+              <a href="#" class="inline-flex items-center px-4 py-3 rounded-lg hover:text-white bg-gray-800 hover:bg-gray-700 w-full transition-all duration-100 active:scale-95">
                    ✨ zaiko.io
                 </a>
               </button> 
             </li>
             <li>
-                <a href="site_main.html" class="inline-flex items-center px-4 py-3 rounded-lg hover:text-white bg-red-900 hover:bg-red-700 w-full">
+                <a href="site_main.html" class="inline-flex items-center px-4 py-3 rounded-lg hover:text-white bg-red-900 w-full hover:bg-red-700 transition-all duration-100 active:scale-95">
                 Menu</a>
             </li>
           </ul>
@@ -99,9 +99,9 @@
         const btn = document.getElementById('tab-btn-' + i);
         const a = btn.querySelector('a');
         if (i === tabNumber) {
-          a.className = "inline-flex items-center px-4 py-3 text-white bg-blue-600 rounded-lg active hover:bg-blue-700 w-full";
+          a.className = "inline-flex items-center px-4 py-3 text-white bg-blue-600 rounded-lg active hover:bg-blue-700 w-full scale-95";
         } else {
-          a.className = "inline-flex items-center px-4 py-3 rounded-lg hover:text-white bg-gray-800 hover:bg-gray-700 w-full";
+          a.className = "inline-flex items-center px-4 py-3 rounded-lg hover:text-white bg-gray-800 hover:bg-gray-700 w-full transition-all duration-100 active:scale-95";
         }
       }
     }

@@ -3,48 +3,84 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./style.css" rel="stylesheet">
-    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
     <title>Event Scraper JP</title>
+    <style>
+    .siteSelect.selected {
+      background-color: #38bdf8 !important;
+      color: #fff !important;
+      border-color: #38bdf8 !important;
+      box-shadow: 0 0 0 2px #fcd34d55, 0 4px 24px #fcd34d22;
+      transform: scale(0.96);
+      transition: transform 0.07s, background 0.15s;
+    }
+    .siteSelect:active {
+      transform: scale(0.94);
+      transition: transform 0.07s;
+    }
+    </style>
   </head>
-  <body class="site_scrape">
-	<h1>Choose which sites you want to scrape</h1>
+  <body class="bg-gray-900 min-h-screen flex flex-col items-center justify-center">
+	  <div class="text-center mb-10 w-full">
+              <h1 class="text-xl font-semibold tracking-tight text-balance bg-gradient-to-r from-sky-400 to-pink-600 bg-clip-text text-transparent sm:text-7xl">
+                Choose which sites you want to scrape
+              </h1>
+    </div>
 
-    <div class="pages">
-      <div class="page">
-		    <button class="siteSelect" id="tpiajp" type="button"><img id="tpiajp" src="./tpiajp.png" alt="t.pia.jp icon" style="transform: scale(0.7);">t.pia.jp</button>
+    <div class="flex gap-6 justify-center mb-8">
+      <button class="siteSelect flex flex-col items-center justify-center bg-gray-700 border border-gray-700 rounded-2xl shadow-md px-8 py-6 transition-all duration-100 hover:shadow-lg w-56 h-56" id="tpiajp" type="button">
+        <img src="./tpiajp.png" alt="t.pia.jp icon" class="h-24 w-24 object-contain mb-4">
+        <span class="text-white font-semibold text-gray-700">t.pia.jp</span>
+      </button>
+      <button class="siteSelect flex flex-col items-center justify-center bg-gray-700 border border-gray-700 rounded-2xl shadow-md px-8 py-6 transition-all duration-100 hover:shadow-lg w-56 h-56" id="eplus" type="button">
+        <img src="./eplus.png" alt="eplus.jp icon" class="h-24 w-24 object-contain mb-4">
+        <span class="text-white font-semibold text-gray-700">eplus.jp</span>
+      </button>
+      <button class="siteSelect flex flex-col items-center justify-center bg-gray-700 border border-gray-700 rounded-2xl shadow-md px-8 py-6 transition-all duration-100 hover:shadow-lg w-56 h-56" id="l_tike" type="button">
+        <img src="./l_tike.png" alt="l-tike.com icon" class="h-24 w-24 object-contain mb-4">
+        <span class="text-white font-semibold text-gray-700">l-tike.com</span>
+      </button>
+      <button class="siteSelect flex flex-col items-center justify-center bg-gray-700 border border-gray-700 rounded-2xl shadow-md px-8 py-6 transition-all duration-100 hover:shadow-lg w-56 h-56" id="zaiko" type="button">
+        <img src="./zaiko.png" alt="zaiko icon" class="h-24 w-24 object-contain mb-4">
+        <span class="text-white font-semibold text-gray-700">zaiko.io</span>
+      </button>
+    </div>
+
+    <p class="mt-8 text-white font-medium text-pretty text-white sm:text-xl/8">
+          Select date range
+        </p>
+    <div id="date-range-picker" date-rangepicker class="flex items-center gap-4">
+      <div class="flex flex-col items-center">
+        <label for="start_date" class="text-white mb-1 text-center">Start Date:</label>
+        <div class="relative">
+          <input id="start_date" name="start_date" type="date" class="bg-gray-700 border border-gray-600 text-gray-900 text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 placeholder-gray-400" placeholder="Select date start">
+        </div>
       </div>
-      <div class="page">
-        <button class="siteSelect" id="eplus" type="button"><img id="eplus" src="./eplus.png" alt="eplus.jp icon"  style="transform: scale(0.7);">eplus.jp</button>
-      </div>
-      <div class="page">
-        <button class="siteSelect" id="l_tike" type="button"><img id="l_tike" src="./l_tike.png" alt="l-tike.com icon" style="transform: scale(1);">l-tike.com</button>
-      </div>
-      <div class="page">
-        <button class="siteSelect" id="zaiko" type="button"><img id="zaiko" src="./zaiko.png" alt="zaiko icon" style="transform: scale(0.7);">zaiko.io</button>
+      <span class="mx-2 text-white mt-6">to</span>
+      <div class="flex flex-col items-center">
+        <label for="end_date" class="text-white mb-1 text-center">End Date:</label>
+        <div class="relative w-full"></div>
+          <input id="end_date" name="end_date" type="date" class="bg-gray-700 border border-gray-600 text-gray-900 text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 placeholder-gray-400" placeholder="Select date end">
+        </div>
       </div>
     </div>
 
-    <div class="scrape_settings">
-    <a href="site_main.html"><button id="back" style="transform: scale(0.8);">⏪Back</button></a>
-    <a><button id="start_scrape"  style="transform: scale(0.8);">✅Start</button></a>
-    </div>
-
-    <div id="settings_options" style="display: block;">
-      <h2 style="text-align: center;">Select date range</h2>
-      <div class="date_options">
-      <div class="date_input">
-        <label for="start_date">Start Date:</label>
-        <input type="date" id="start_date" name="start_date" value="2025-01-01">
-      </div>
-      ↔
-      <div class="date_input">
-        <label for="end_date">End Date:</label>
-        <input type="date" id="end_date" name="end_date" value="2025-12-31">
-      </div>
-      </div>
-      <p style="display: block; text-align: center;">Currently only affects eplus.jp and l-tike.com.</p>
+    <div class="mt-8 flex gap-2 justify-center">
+      <a href="site_main.html" class="w-40">
+      <button
+        class="w-full px-8 py-3 bg-red-600 text-white rounded-lg font-semibold shadow-md hover:bg-red-700 transition-all duration-100 active:scale-95"
+      >
+        Menu
+      </button>
+      </a>
+      <button
+      id="start_scrape"
+      class="w-40 px-8 py-3 bg-amber-400 text-white rounded-lg font-semibold shadow-md hover:bg-amber-500 transition-all duration-100 active:scale-95"
+      >
+      Start
+      </button>
     </div>
 
     <script src="./renderer.js"></script>
