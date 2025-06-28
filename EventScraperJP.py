@@ -9,6 +9,7 @@ import os
 import concurrent.futures
 import random
 import sys
+import platform
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from openpyxl.styles import Font, Color, PatternFill, Alignment, Fill
@@ -16,17 +17,14 @@ from openpyxl.worksheet.dimensions import ColumnDimension, DimensionHolder
 from openpyxl.utils import get_column_letter
 from openpyxl.utils.dataframe import dataframe_to_rows
 from flask import Flask, request, jsonify, send_from_directory
-import getpass
-import platform
 
 if platform.system() == "Windows":
     username = os.getlogin()
-    BASE_FOLDER = rf"C:\Users\{username}\Documents\EventScraperJP"
-    EXCEL_FILE = rf"{BASE_FOLDER}\EventsJP.xlsx"
+    BASE_FOLDER = os.path.join(os.path.expanduser("~"), "Documents", "EventScraperJP")
 else:
-    username = getpass.getuser()
-    BASE_FOLDER = f"/home/{username}/EventScraperJP"
-    EXCEL_FILE = f"{BASE_FOLDER}/EventsJP.xlsx"
+    BASE_FOLDER = os.path.join(os.path.expanduser("~"), "EventScraperJP")
+
+EXCEL_FILE = os.path.join(BASE_FOLDER, "EventsJP.xlsx")
 
 HEADER = ["Name", "Romaji", "Place", "Beginning Date", "Ending Date", "Link"]
 ISDEBUG = True
