@@ -1,7 +1,7 @@
 {
   "name": "eventscraperjp",
   "version": "2.0.0",
-  "description": "Event Scraper JP - WebScraper for events in Japan using https://t.pia.jp/ and https://l-tike.com/ and https://eplus.jp/ and https://zaiko.io/",
+  "description": "EventScraperJP - WebScraper for events in Japan using https://t.pia.jp/ and https://l-tike.com/ and https://eplus.jp/ and https://zaiko.io/",
   "author": "Mast",
   "main": "main.js",
   "scripts": {
