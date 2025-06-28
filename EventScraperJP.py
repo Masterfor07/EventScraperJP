@@ -162,7 +162,7 @@ def eplusScraper(month):
                                 #    break #tester
                                 #print(i)
                 except Exception as e:
-                    print(f"Error scraping from month: {month} page {page}: {e}")
+                    print(f"Error scraping from month: {month} page {page}: {e} (eplus.jp suffocated a bit).")
                     retries -= 1
                     if retries > 0:
                         wait_time = random.randint(20, 60)
