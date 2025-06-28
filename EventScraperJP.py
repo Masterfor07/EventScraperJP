@@ -16,10 +16,18 @@ from openpyxl.worksheet.dimensions import ColumnDimension, DimensionHolder
 from openpyxl.utils import get_column_letter
 from openpyxl.utils.dataframe import dataframe_to_rows
 from flask import Flask, request, jsonify, send_from_directory
+import getpass
+import platform
 
-username=os.getlogin()
-BASE_FOLDER = rf"C:\Users\{username}\Documents\EventScraperJP" 
-EXCEL_FILE = rf"{BASE_FOLDER}\EventsJP2025.xlsx"
+if platform.system() == "Windows":
+    username = os.getlogin()
+    BASE_FOLDER = rf"C:\Users\{username}\Documents\EventScraperJP"
+    EXCEL_FILE = rf"{BASE_FOLDER}\EventsJP.xlsx"
+else:
+    username = getpass.getuser()
+    BASE_FOLDER = f"/home/{username}/EventScraperJP"
+    EXCEL_FILE = f"{BASE_FOLDER}/EventsJP.xlsx"
+
 HEADER = ["Name", "Romaji", "Place", "Beginning Date", "Ending Date", "Link"]
 ISDEBUG = True
 
