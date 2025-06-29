@@ -9,7 +9,10 @@
     "dev": "electron . --dev",
     "build": "electron-builder",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder --win"
+    "dist": "electron-builder --win",
+    "build:win": "electron-builder --win",
+    "build:linux": "electron-builder --linux",
+    "build:mac": "electron-builder --mac"
   },
   "devDependencies": {
     "electron": "^22.3.27",
@@ -31,12 +34,20 @@
     ],
     "extraResources": [
       {
-        "from": "dist/EventScraperJP.exe",
-        "to": "EventScraperJP.exe"
+        "from": "dist/EventScraperJP*",
+        "to": "."
       }
     ],
     "win": {
       "target": "nsis",
+      "icon": "site/app-icon.png"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "icon": "site/app-icon.png"
+    },
+    "mac": {
+      "target": ["dmg", "zip"],
       "icon": "site/app-icon.png"
     },
     "nsis": {

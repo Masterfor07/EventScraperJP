@@ -35,7 +35,16 @@ function createWindow() {
 }
 
 function killPythonExe() {
-  spawn('taskkill', ['/f', '/t', '/im', 'EventScraperJP.exe'], {detached: true});
+  if (process.platform === 'win32') {
+    spawn('taskkill', ['/f', '/t', '/im', 'EventScraperJP.exe'], {detached: true});
+  } else {
+    // Try to kill by process id if available, or by name
+    if (pid) {
+      process.kill(pid, 'SIGTERM');
+    } else {
+      spawn('pkill', ['-f', 'EventScraperJP'], {detached: true});
+    }
+  }
 }
 
 app.on('ready', () => {
@@ -45,7 +54,8 @@ app.on('ready', () => {
     pythonExePath = "python";
     pythonProcess = spawn(pythonExePath, ["./EventScraperJP.py"]);
   } else {
-    pythonExePath = path.join(process.resourcesPath, "EventScraperJP.exe");
+    let exeName = process.platform === 'win32' ? "EventScraperJP.exe" : "EventScraperJP";
+    pythonExePath = path.join(process.resourcesPath, exeName);
     pythonProcess = spawn(pythonExePath, [], {detached: true});
     pid = pythonProcess.pid;
   }
